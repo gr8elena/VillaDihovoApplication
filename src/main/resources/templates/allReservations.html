@@ -41,12 +41,18 @@
         <p>All your reservations are here!</p>
     </div>
     <div class="col-12 justify-content-center d-flex">
-        <button type="submit" class="btn btn-secondary">Rooms</button>
-        <button type="submit" class="btn btn-secondary btn-block">Food</button>
-        <button type="submit" class="btn btn-secondary btn-block">Beverages</button>
-        <button type="submit" class="btn btn-secondary btn-block">Events</button>
-        <button type="submit" class="btn btn-secondary btn-block">Activities</button>
-        <button type="submit" class="btn btn-secondary btn-block">Service</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Rooms</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Food</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Beverages</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Events</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Activities</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Service</button>
+    </div>
+    <div class="col-12">
+        <div th:each="reservation : ${reservations}">
+<!--            <th:block  th:text="${reservation.getNumerGuests()}"></th:block>-->
+            Hello!
+        </div>
     </div>
 </div>
 </body>
