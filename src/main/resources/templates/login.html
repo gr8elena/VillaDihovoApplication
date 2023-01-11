@@ -11,12 +11,11 @@
     <title>Login</title>
 </head>
 <body>
+    <img th:src="@{../logo.png}" class="img-fluid mx-auto d-block" width="350px" height="250px"  alt="Logo">
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <img width="220px" height="70px" th:src="@{/static/images/logo.png}" alt="Logo">
-            <h1 class="text-center">Login</h1>
-            <form  th:method="POST" th:action="@{/login}">
+            <form>
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="username" class="form-control" id="username" aria-describedby="emailHelp">

@@ -4,12 +4,13 @@ import com.example.villadihovo.model.user_table;
 import com.example.villadihovo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/login")
+@RequestMapping("/login")
 public class LoginController {
 
     UserService userService;
@@ -20,14 +21,14 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping
-    public String getLoginPage(@RequestParam String username,
-                               @RequestParam String password,
-                               HttpServletRequest request){
-
-        if(this.userService.findByUsernameAndPassword(username,password).isPresent()) {
-            return "redirect:/api/login";
-        }
-        return "redirect:/login";
-    }
+//    @PostMapping
+//    public String getLoginPage(@RequestParam String username,
+//                               @RequestParam String password,
+//                               HttpServletRequest request){
+//
+//        if(this.userService.findByUsernameAndPassword(username,password).isPresent()) {
+//            return "redirect:/api/login";
+//        }
+//        return "redirect:/login";
+//    }
 }
