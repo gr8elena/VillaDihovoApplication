@@ -28,8 +28,8 @@
             <img th:src="@{../logo.png}" class="img-fluid mx-auto d-block ms-0" width="200px" height="150px"  alt="Logo">
             <div class="collapse navbar-collapse justify-content-end mr-5" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-0 text-black ml-5">
-                    <a class="nav-link active mr-5 " aria-current="page" href="#">Home</a>
-                    <a class="nav-link mr-5" href="#">Reservations</a>
+                    <a class="nav-link mr-5 " th:href="@{/home}">Home</a>
+                    <a class="nav-link  active mr-5"  aria-current="page"  href="#">Reservations</a>
                     <a class="nav-link mr-5" href="#">Contact</a>
                 </div>
             </div>
@@ -50,8 +50,9 @@
     </div>
     <div class="col-12">
         <div th:each="reservation : ${reservations}">
-<!--            <th:block  th:text="${reservation.getNumerGuests()}"></th:block>-->
-            Hello!
+            <div class="container-xl border border-secondary rounded mt-5">
+            <th:block  th:text="${reservation.number_guests}"></th:block>
+            </div>
         </div>
     </div>
 </div>
