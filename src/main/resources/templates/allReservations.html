@@ -11,19 +11,31 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <title>All Reservations</title>
     <style>
         header{
             font-size: 30px;
         }
         body {
-            font-size: 23px;
+            font-family:  'Montserrat', sans-serif;
+        }
+        h1{
+            font-size:25px;
+        }
+        table{
+            font-size: 20px;
+            text-align: center;
+        }
+        .buttons
+        {
+            width: 100px;
         }
     </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
             <img th:src="@{../logo.png}" class="img-fluid mx-auto d-block ms-0" width="200px" height="150px"  alt="Logo">
             <div class="collapse navbar-collapse justify-content-end mr-5" id="navbarNavAltMarkup">
@@ -36,11 +48,11 @@
         </div>
     </nav>
 </header>
-<div claass="row mt-5">
-    <div class="col-12 mx-5 pl-5 my-5 justify-content-center">
-        <p>All your reservations are here!</p>
+<div class="row mt-5 bg-light" >
+    <div class="col-12 pl-5 my-5 ml-0 justify-content-center text-secondary">
+        <h1>All your reservations are here!</h1>
     </div>
-    <div class="col-12 justify-content-center d-flex">
+    <div class="col-12 justify-content-center d-flex mb-5">
         <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Rooms</button>
         <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Food</button>
         <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Beverages</button>
@@ -48,13 +60,71 @@
         <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Activities</button>
         <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Service</button>
     </div>
-    <div class="col-12">
-        <div th:each="reservation : ${reservations}">
-            <div class="container-xl border border-secondary rounded mt-5">
-            <th:block  th:text="${reservation.number_guests}"></th:block>
-            </div>
-        </div>
+    <br> <br>
+    <div class="container-fluid">
+            <div th:each="reservation : ${roomReservations}" class="d-flex">
+                    <table class="table table-striped table-bordered table-hover">
+                        <tr>
+                            <td rowspan="2">
+                                <div th:switch="${reservation.room_type}">
+                                    <img th:case="'Single'" th:src="@{../single_room.jpg}" width="350px" height="200px" alt="Single Room">
+                                    <img th:case="'Double'" th:src="@{../double_room.jpg}" width="350px" height="200px" alt="Double Room">
+                                </div>
+<!--                                <img th:src="@{../room.jpg}" width="350px" height="200px">-->
+                            </td>
+                            <td>
+                                <h6 class="text-secondary">Room type</h6>
+                                <th:block  th:text="${reservation.room_type}"></th:block>
+                            </td>
+                            <td>
+                                <h6 class="text-secondary">Price</h6>
+                                <th:block  th:text="${reservation.price}">евра</th:block>
+                            </td>
+                            <td>
+                                <h6 class="text-secondary">Villa</h6>
+                                <th:block  th:text="${reservation.name}"></th:block>
+                            </td>
+                            <td>
+                                <h6  class="text-secondary">Full Name</h6>
+                                <th:block  th:text="${reservation.full_name}"></th:block>
+                            </td>
+                            <td>
+                                <h6  class="text-secondary">Phone Number</h6>
+                                <th:block  th:text="${reservation.phone_number}"></th:block>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6  class="text-secondary">Start Date</h6>
+                                <th:block  th:text="${reservation.start_date}"></th:block>
+                            </td>
+                            <td>
+                                <h6  class="text-secondary">End Date</h6>
+                                <th:block  th:text="${reservation.end_date}"></th:block>
+                            </td>
+                            <td>
+                                <h6  class="text-secondary">Number of guests</h6>
+                                <th:block  th:text="${reservation.number_guests}"></th:block>
+                            </td>
+                            <td>
+                                <h6  class="text-secondary">Adults</h6>
+                                <th:block  th:text="${reservation.adults}"></th:block>
+                            </td>
+                            <td>
+                                <h6  class="text-secondary">Children</h6>
+                                <th:block  th:text="${reservation.children}"></th:block>
+                            </td>
+                        </tr>
+                    </table>
+
+                <div class="row mr-5">
+                    <div class="col-sm-4 offset-sm-8 ml-5 mt-5">
+                        <button class="btn btn-info buttons" th:onclick="'location.href = \'/roomReservations/edit-form\''">Edit</button>
+                        <button type="submit" class="btn btn-danger  buttons mt-2">Delete</button>
+                    </div>
+                </div>
     </div>
+</div>
 </div>
 </body>
 </html>
