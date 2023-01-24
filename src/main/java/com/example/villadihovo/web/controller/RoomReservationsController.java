@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/roomReservations")
+@RequestMapping("/rooms/reservations")
 public class RoomReservationsController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class RoomReservationsController {
         ModelAndView modelAndView = new ModelAndView();
         List<ReservationForRoomDto> allRoomReservations = this.guestMakeReservationService.findAllRoomReservations();
        model.addAttribute("roomReservations", allRoomReservations);
-        modelAndView.setViewName("allReservations");
+        modelAndView.setViewName("room-reservations");
         return modelAndView;
     }
     @GetMapping("/edit-form/{id}")

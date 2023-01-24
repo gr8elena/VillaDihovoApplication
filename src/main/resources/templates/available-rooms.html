@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <title>All Reservations</title>
+    <title>Available Rooms</title>
     <style>
         header{
             font-size: 30px;
@@ -50,55 +50,34 @@
 </header>
 <div class="row mt-5 bg-light" >
     <div class="col-12 pl-5 my-5 ml-0 justify-content-center text-secondary">
-        <h1>All your reservations are here!</h1>
-    </div>
-    <div class="col-12 justify-content-center d-flex mb-5">
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/roomReservations\''">Rooms</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/foodReservations\''">Food</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/beverageReservations\''">Beverages</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/eventReservations\''">Events</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/activityReservations\''">Activities</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/serviceReservations\''">Service</button>
+        <h1>Pick your date and room!</h1>
     </div>
     <br> <br>
     <div class="container-fluid">
-        <div th:each="reservation : ${eventReservations}" class="d-flex">
+        <div th:each="availableRoom : ${availableRooms}" class="d-flex">
             <table class="table table-striped table-bordered table-hover">
                 <tr>
-                    <!--                    <td rowspan="2">-->
-                    <!--                        <div th:switch="${reservation.room_type}">-->
-                    <!--                            <img th:case="'Single'" th:src="@{../single_room.jpg}" width="350px" height="200px" alt="Single Room">-->
-                    <!--                            <img th:case="'Double'" th:src="@{../double_room.jpg}" width="350px" height="200px" alt="Double Room">-->
-                    <!--                        </div>-->
-                    <!--                        &lt;!&ndash;                                <img th:src="@{../room.jpg}" width="350px" height="200px">&ndash;&gt;-->
-                    <!--                    </td>-->
+                    <td rowspan="2" style="width: 550px">
+                        <div th:switch="${availableRoom.room_type}">
+                            <img th:case="'Single'" th:src="@{../single_room.jpg}" width="350px" height="200px" alt="Single Room">
+                            <img th:case="'Double'" th:src="@{../double_room.jpg}" width="350px" height="200px" alt="Double Room">
+                        </div>
+                        <!--                                <img th:src="@{../room.jpg}" width="350px" height="200px">-->
+                    </td>
                     <td>
-                        <h6 class="text-secondary">Event type</h6>
-                        <th:block  th:text="${reservation.event_type}"></th:block>
+                        <h6 class="text-secondary">Room type</h6>
+                        <th:block  th:text="${availableRoom.room_type}"></th:block>
                     </td>
                     <td>
                         <h6 class="text-secondary">Price</h6>
-                        <th:block  th:text="${reservation.price}">евра</th:block>
-                    </td>
-                    <td>
-                        <h6  class="text-secondary">Start Date</h6>
-                        <th:block  th:text="${reservation.start_date}"></th:block>
-                    </td>
-                    <td>
-                        <h6  class="text-secondary">End Date</h6>
-                        <th:block  th:text="${reservation.end_date}"></th:block>
-                    </td>
-                    <td>
-                        <h6  class="text-secondary">Number of guests</h6>
-                        <th:block  th:text="${reservation.number_of_interested_guests}"></th:block>
+                        <th:block  th:text="${availableRoom.price}"></th:block>
                     </td>
                 </tr>
             </table>
 
             <div class="row mr-5">
                 <div class="col-sm-4 offset-sm-8 ml-5 mt-5">
-                    <button class="btn btn-info buttons" th:onclick="'location.href = \'/roomReservations/edit-form\''">Edit</button>
-                    <button type="submit" class="btn btn-danger  buttons mt-2">Delete</button>
+                    <a type="submit" class="btn btn-info btn-ml buttons mt-2">Reserve</a>
                 </div>
             </div>
         </div>

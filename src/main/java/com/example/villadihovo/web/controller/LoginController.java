@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/login")
+@RequestMapping("/api/login")
 public class LoginController {
 
     UserService userService;

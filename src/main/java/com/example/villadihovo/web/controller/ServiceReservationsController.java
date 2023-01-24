@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/serviceReservations")
+@RequestMapping("/service/reservations")
 public class ServiceReservationsController {
     @Autowired
     private ReservationForServiceService reservationForServiceService;
@@ -27,7 +27,7 @@ public class ServiceReservationsController {
         ModelAndView modelAndView = new ModelAndView();
         List<ReservationForServiceDto> allServiceReservations = this.reservationForServiceService.findAllServiceReservations();
         model.addAttribute("serviceReservations", allServiceReservations);
-        modelAndView.setViewName("serviceReservations");
+        modelAndView.setViewName("service-reservations");
         return modelAndView;
     }
 }
