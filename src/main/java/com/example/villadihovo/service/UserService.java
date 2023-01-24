@@ -1,9 +1,9 @@
 package com.example.villadihovo.service;
 
-import com.example.villadihovo.model.user_table;
+import com.example.villadihovo.model.users.UserTable;
 
 import java.util.Optional;
 
 public interface UserService {
-    Optional<user_table> findByUsernameAndPassword(String username, String password);
+    Optional<UserTable> findByUsernameAndPassword(String username, String password);
 }

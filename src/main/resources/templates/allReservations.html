@@ -53,19 +53,19 @@
         <h1>All your reservations are here!</h1>
     </div>
     <div class="col-12 justify-content-center d-flex mb-5">
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Rooms</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Food</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Beverages</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Events</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Activities</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block">Service</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/roomReservations\''">Rooms</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/foodReservations\''">Food</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/beverageReservations\''">Beverages</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/eventReservations\''">Events</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/activityReservations\''">Activities</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/serviceReservations\''">Service</button>
     </div>
     <br> <br>
     <div class="container-fluid">
             <div th:each="reservation : ${roomReservations}" class="d-flex">
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <td rowspan="2">
+                            <td rowspan="2" style="width: 550px">
                                 <div th:switch="${reservation.room_type}">
                                     <img th:case="'Single'" th:src="@{../single_room.jpg}" width="350px" height="200px" alt="Single Room">
                                     <img th:case="'Double'" th:src="@{../double_room.jpg}" width="350px" height="200px" alt="Double Room">
@@ -85,7 +85,7 @@
                                 <th:block  th:text="${reservation.name}"></th:block>
                             </td>
                             <td>
-                                <h6  class="text-secondary">Full Name</h6>
+                                <h6  class="text-secondary" >Full Name</h6>
                                 <th:block  th:text="${reservation.full_name}"></th:block>
                             </td>
                             <td>
@@ -119,8 +119,8 @@
 
                 <div class="row mr-5">
                     <div class="col-sm-4 offset-sm-8 ml-5 mt-5">
-                        <button class="btn btn-info buttons" th:onclick="'location.href = \'/roomReservations/edit-form\''">Edit</button>
-                        <button type="submit" class="btn btn-danger  buttons mt-2">Delete</button>
+                        <a class="btn btn-info buttons" th:href="@{'/roomReservations/edit-form/{id}' (id = ${reservation.reservation_id})}">Edit</a>
+                        <a type="submit" class="btn btn-danger  buttons mt-2">Delete</a>
                     </div>
                 </div>
     </div>

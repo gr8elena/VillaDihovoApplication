@@ -1,6 +1,6 @@
 package com.example.villadihovo.service.impl;
 
-import com.example.villadihovo.model.user_table;
+import com.example.villadihovo.model.users.UserTable;
 import com.example.villadihovo.repository.UserRepository;
 import com.example.villadihovo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Optional<user_table> findByUsernameAndPassword(String username, String password) {
+    public Optional<UserTable> findByUsernameAndPassword(String username, String password) {
         return userRepository.findByUsernameAndPassword(username,password);
     }
 }

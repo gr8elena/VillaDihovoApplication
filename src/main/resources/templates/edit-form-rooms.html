@@ -15,59 +15,66 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-<form th:method="POST" th:action="@{/roomReservations/edit-form}" style="width:800px" class="justify-content" >
-    <input type="hidden" id="reservationEditId" name="reservationEditId" th:value="(${edit-villa} != null ? ${edit-villa.ic} : '')"/>
+<form th:method="put" th:action= "@{'/roomReservations/edit-form/{id}' (id = ${roomDto.reservation_id})}"  style="width:600px" class="mx-auto" >
     <div class="form-group">
         <label for="roomType">Room Type</label>
         <select class="form-control" id="roomType">
-            <option>Single</option>
-            <option>Double</option>
+            <option th:selected="${roomDto != null && roomDto.room_type == 'Single'}">Single</option>
+            <option th:selected="${roomDto != null && roomDto.room_type == 'Double'}">Double</option>
         </select>
     </div>
     <div class="form-group">
         <label for="villaName">Villa Name</label>
         <select class="form-control" id="villaName">
             <option th:each="villa : ${villas}"
-                    th:text="${villa.name}">
+                    th:text="${villa.name}"
+                    th:selected="${roomDto != null && roomDto.name == villa.name}">
             </option>
         </select>
     </div>
     <div class="form-group">
-        <label for="price">Price</label>
-        <input type="number"
-               class="form-control"
-               id="price"
-               th:value="(${edit-villa} != null ? ${edit-villa.price()} : '')">
-    </div>
-    <div class="form-group">
-        <label for="fullName">Full Name</label>
-        <input type="text"
-               class="form-control"
-               id="fullName">
-    </div>
-    <div class="form-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input type="tel" class="form-control" id="phoneNumber">
+        <label for="availableRoom">Available Rooms</label>
+        <select class="form-control" id="availableRoom">
+            <option th:each="rooms : ${available_rooms}"
+                    th:text="${rooms.room_id}"
+                    th:selected="${rooms != null && rooms.room_id == roomDto.room_id}">
+            </option>
+        </select>
     </div>
     <div class="form-group">
         <label for="startDate">Start Date</label>
-        <input type="date" class="form-control" id="startDate">
+        <input type="date"
+               class="form-control"
+               id="startDate"
+               th:value="(${roomDto} != null ? ${roomDto.start_date} : '')">
     </div>
     <div class="form-group">
         <label for="endDate">End Date</label>
-        <input type="date" class="form-control" id="endDate">
+        <input type="date"
+               class="form-control"
+               id="endDate"
+               th:value="(${roomDto} != null ? ${roomDto.end_date} : '')">
     </div>
     <div class="form-group">
         <label for="numberOfGuests">Number of Guests</label>
-        <input type="number" class="form-control" id="numberOfGuests">
+        <input type="number"
+               class="form-control"
+               id="numberOfGuests"
+               th:value="(${roomDto} != null ? ${roomDto.number_guests} : '')">
     </div>
     <div class="form-group">
         <label for="adults">Adults</label>
-        <input type="number" class="form-control" id="adults">
+        <input type="number"
+               class="form-control"
+               id="adults"
+               th:value="(${roomDto} != null ? ${roomDto.adults} : '')">
     </div>
     <div class="form-group">
         <label for="children">Children</label>
-        <input type="number" class="form-control" id="children">
+        <input type="number"
+               class="form-control"
+               id="children"
+               th:value="(${roomDto} != null ? ${roomDto.children} : '')">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

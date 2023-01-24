@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class ReservationForRoomDto implements Serializable {
+    private int reservation_id;
+    private int room_id;
     private LocalDate start_date;
     private LocalDate end_date;
     private int number_guests;

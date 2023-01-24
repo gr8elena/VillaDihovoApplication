@@ -1,10 +1,7 @@
 package com.example.villadihovo.web.controller;
 
-import com.example.villadihovo.model.user_table;
 import com.example.villadihovo.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
