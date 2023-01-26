@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomsServiceImpl implements RoomsService {
@@ -21,5 +22,10 @@ public class RoomsServiceImpl implements RoomsService {
     @Override
     public List<Rooms> findAll() {
         return roomRepository.findAll();
+    }
+
+    @Override
+    public Optional<Rooms> findRoomById(Integer id) {
+        return roomRepository.findById(id);
     }
 }

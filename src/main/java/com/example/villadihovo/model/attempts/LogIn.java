@@ -23,4 +23,9 @@ public class LogIn {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserTable user_id;
+
+    public LogIn(String vreme_na_najava, UserTable user_id) {
+        this.vreme_na_najava = vreme_na_najava;
+        this.user_id = user_id;
+    }
 }

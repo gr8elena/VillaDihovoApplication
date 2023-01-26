@@ -8,6 +8,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -15,6 +16,7 @@
   <style>
     header{
       font-size: 30px;
+      font-family:  'Montserrat', sans-serif;
     }
     body {
       font-family:  'Montserrat', sans-serif;
@@ -32,6 +34,31 @@
     .btn-width{
       width: 120px;
     }
+    .dropbtn {
+      background: white;
+      border: none;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      font-size: 20px;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {background-color: #ddd;}
+    .dropdown:hover .dropdown-content {display: block;}
+    /*.dropdown:hover .dropbtn {background-color: darkolivegreen;}*/
   </style>
 </head>
 <body>
@@ -42,8 +69,15 @@
       <div class="collapse navbar-collapse justify-content-end mr-5" id="navbarNavAltMarkup">
         <div class="navbar-nav me-0 text-black ml-5">
           <a class="nav-link active mr-5 " aria-current="page" href="#">Home</a>
-          <a class="nav-link mr-5" th:href="@{/rooms/reservations}">Reservations</a>
-          <a class="nav-link mr-5" href="#">Contact</a>
+          <div class="dropdown">
+            <button class="dropbtn nav-link mr-5">Reservations</button>
+            <div class="dropdown-content">
+              <li th:if="${session.role} != 'user' and ${session.role} != 'default'"><a th:href="@{/reservations/rooms}" class="text-secondary">New Reservations</a></li>
+              <li><a th:href="@{/rooms/available}" class="text-secondary">Available Reservations</a></li>
+            </div>
+          </div>
+            <a class="nav-link mr-5" href="#">Contact</a>
+          <a class="nav-link mr-5" href="/logout" th:if="${session.user != null}">Log Out</a>
         </div>
       </div>
     </div>
@@ -66,8 +100,8 @@
         </h6>
       </div>
       <div class="col-12 p-5 ml-4">
-        <a class="btn btn-secondary mx-3 my-2 btn-width" th:href="@{/login}">Login</a>
-        <a class="btn btn-secondary mx-3 my-2 btn-width" th:href="@{/api/register}">Register</a>
+        <a class="btn btn-secondary mx-3 my-2 btn-width" th:href="@{/api/login}" th:if="${session.user == null}">Login</a>
+        <a class="btn btn-secondary mx-3 my-2 btn-width" th:href="@{/api/register}" th:if="${session.user == null}">Register</a>
       </div>
     </div>
   </div>

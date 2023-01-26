@@ -2,14 +2,15 @@ package com.example.villadihovo.service.impl;
 
 import com.example.villadihovo.dto.ReservationForRoomDto;
 import com.example.villadihovo.model.reservations.Reservation;
-import com.example.villadihovo.model.offers.Rooms;
 import com.example.villadihovo.repository.GuestMakeReservationRepository;
 import com.example.villadihovo.repository.ReservationRepository;
 import com.example.villadihovo.repository.RoomRepository;
+import com.example.villadihovo.repository.VillaRepository;
 import com.example.villadihovo.service.GuestMakeReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public class GuestMakeReservationServiceImpl implements GuestMakeReservationServ
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private VillaRepository villaRepository;
 
     @Override
     public List<ReservationForRoomDto> findAllRoomReservations() {
@@ -34,24 +37,23 @@ public class GuestMakeReservationServiceImpl implements GuestMakeReservationServ
     }
 
     @Override
-    public ReservationForRoomDto updateRoomReservationById(Integer roomReservationId , ReservationForRoomDto roomReservationDto) {
-        ReservationForRoomDto roomReservationsDTOById = guestMakeReservationRepository.findRoomReservationsDTOById(roomReservationId);
+    public ReservationForRoomDto updateRoomReservationById(Integer roomReservationId, LocalDate start_date, LocalDate end_date, Integer adults, Integer children, Integer number_guests) {
         Optional<Reservation> reservation = reservationRepository.findById(roomReservationId);
-        Optional<Rooms> roomsOptional = null;
         if (reservation.isPresent()) {
-            reservation.get().setStart_date(roomReservationDto.getStart_date());
-            reservation.get().setEnd_date(roomReservationDto.getEnd_date());
-            reservation.get().setNumber_guests(roomReservationDto.getNumber_guests());
-            reservation.get().setAdults(roomReservationDto.getAdults());
-            reservation.get().setChildren(roomReservationDto.getChildren());
 
-            int room_id = reservation.get().getRoom_id().getRoom_id();
-            roomsOptional = roomRepository.findById(room_id);
-            roomsOptional.ifPresent(room -> room.setRoom_type(roomReservationDto.getRoom_type()));
-            roomsOptional.ifPresent(room -> reservation.get().setRoom_id(room));
-            roomRepository.save(roomsOptional.get());
+            reservation.get().setStart_date(start_date);
+            reservation.get().setEnd_date(end_date);
+            reservation.get().setNumber_guests(number_guests);
+            reservation.get().setAdults(adults);
+            reservation.get().setChildren(children);
+
             reservationRepository.save(reservation.get());
         }
         return guestMakeReservationRepository.findRoomReservationsDTOById(roomReservationId);
+    }
+
+    @Override
+    public void deleteReservationById(Integer reservation_id) {
+        reservationRepository.deleteById(reservation_id);
     }
 }

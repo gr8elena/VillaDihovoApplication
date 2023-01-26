@@ -18,7 +18,7 @@ public class UserTable {
     private int user_id;
 
     @Column(nullable = false, unique = true)
-    private char embg;
+    private String embg;
 
     @Column(nullable = false)
     private String address;
@@ -38,4 +38,13 @@ public class UserTable {
     @Column(nullable = false)
     private String phone_number;
 
+    public UserTable(String embg, String address, String email, String password, String username, String full_name, String phone_number) {
+        this.embg = embg;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.full_name = full_name;
+        this.phone_number = phone_number;
+    }
 }

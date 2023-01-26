@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/food/reservations")
+@RequestMapping("/reservations/food")
 public class FoodReservationsController {
 
     @Autowired

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/event/reservations")
+@RequestMapping("/reservations/event")
 public class EventReservationsController {
 
     @Autowired

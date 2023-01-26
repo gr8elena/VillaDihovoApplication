@@ -31,6 +31,31 @@
         {
             width: 100px;
         }
+        .dropbtn {
+            background: white;
+            border: none;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            font-size: 20px;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: #ddd;}
+        .dropdown:hover .dropdown-content {display: block;}
+        /*.dropdown:hover .dropbtn {background-color: darkolivegreen;}*/
     </style>
 </head>
 <body>
@@ -40,9 +65,16 @@
             <img th:src="@{../logo.png}" class="img-fluid mx-auto d-block ms-0" width="200px" height="150px"  alt="Logo">
             <div class="collapse navbar-collapse justify-content-end mr-5" id="navbarNavAltMarkup">
                 <div class="navbar-nav me-0 text-black ml-5">
-                    <a class="nav-link mr-5 " th:href="@{/home}">Home</a>
-                    <a class="nav-link  active mr-5"  aria-current="page"  href="#">Reservations</a>
+                    <a class="nav-link active mr-5 " aria-current="page" th:href="@{/home}">Home</a>
+                    <div class="dropdown">
+                        <button class="dropbtn nav-link mr-5">Reservations</button>
+                        <div class="dropdown-content">
+                            <li><a th:href="@{/rooms/reservations}" class="text-secondary">New Reservations</a></li>
+                            <li><a th:href="@{/rooms/available}" class="text-secondary">Available Reservations</a></li>
+                        </div>
+                    </div>
                     <a class="nav-link mr-5" href="#">Contact</a>
+                    <a class="nav-link mr-5" href="/logout" th:if="${session.user != null}">Log Out</a>
                 </div>
             </div>
         </div>
@@ -53,12 +85,12 @@
         <h1>All your reservations are here!</h1>
     </div>
     <div class="col-12 justify-content-center d-flex mb-5">
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/rooms/reservations\''">Rooms</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/food/reservations\''">Food</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/beverage/reservations\''">Beverages</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/event/reservations\''">Events</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/activity/reservations\''">Activities</button>
-        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/service/reservations\''">Service</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/rooms\''">Rooms</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/food\''">Food</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/beverage\''">Beverages</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/event\''">Events</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/activity\''">Activities</button>
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/service\''">Service</button>
     </div>
     <br> <br>
     <div class="container-fluid">
@@ -119,8 +151,10 @@
 
                 <div class="row mr-5">
                     <div class="col-sm-4 offset-sm-8 ml-5 mt-5">
-                        <a class="btn btn-info buttons" th:href="@{'/roomReservations/edit-form/{id}' (id = ${reservation.reservation_id})}">Edit</a>
-                        <a type="submit" class="btn btn-danger  buttons mt-2">Delete</a>
+                        <a class="btn btn-info buttons" th:href="@{'/reservations/rooms/edit-form/{id}' (id = ${reservation.reservation_id})}">Edit</a>
+                        <form th:method="DELETE" th:action="@{'/reservations/rooms/delete/{id}' (id = ${reservation.reservation_id})}" >
+                            <button type="submit" class="btn btn-danger  buttons mt-2">Delete</button>
+                        </form>
                     </div>
                 </div>
     </div>
