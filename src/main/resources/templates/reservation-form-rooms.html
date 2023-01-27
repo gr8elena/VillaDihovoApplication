@@ -15,101 +15,121 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
-<form style="width:600px" class="mx-auto mt-5" >
+<form th:action="@{/rooms/available/reserve/room}" th:method="post" style="width:600px" class="mx-auto mt-5" >
     <div class="form-group">
         <div class="col-12">
             <div class="form-group">
                 <input type="date"
                        class="form-control"
-                       id="startDate">
+                       id="start_date"
+                       name="start_date"
+                       th:value="(${start_date} != null ? ${start_date} : '')">
             </div>
 
            <div class="form-group">
                 <input type="date"
                        class="form-control"
-                       id="endDate">
+                       id="end_date"
+                       name="end_date"
+                       th:value="(${end_date} != null ? ${end_date} : '')">
            </div>
            <div class="row ml-0">
                 <div class="form-group">
                     <input type="text"
                        class="form-control"
-                       id="numberOfGuests"
                        style="width: 190px"
-                       placeholder="Number of guests">
+                       id="number_guests"
+                       name="number_guests"
+                       placeholder="Number of guests"
+                       th:value="(${number_guests} != null ? ${number_guests} : '')">
                 </div>
                 <div class="form-group">
                     <input type="text"
                            class="form-control"
+                           style="width: 190px"
                            id="adults"
-                           style="width: 190px"
-                           placeholder="Adults">
+                           name="adults"
+                           placeholder="Adults"
+                           th:value="(${adults} != null ? ${adults} : '')">
                 </div>
                 <div class="form-group">
                     <input type="text"
                            class="form-control"
-                           id="children"
                            style="width: 190px"
-                           placeholder="Children">
+                           id="children"
+                           name="children"
+                           placeholder="Children"
+                           th:value="(${children} != null ? ${children} : '')">
                 </div>
            </div>
             <div class="form-group">
                 <input type="text"
                        class="form-control"
-                       id="roomNumber"
-                       placeholder="Room Number">
-            </div>
-            <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       id="roomType"
-                       placeholder="Room Type">
-            </div>
-            <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       id="villaName"
-                       placeholder="Villa Name">
+                       placeholder="Room Type"
+                       id="room_type"
+                       name="room_type"
+                       th:value="(${roomChosen.room_type} != null ? ${roomChosen.room_type} : '')">
             </div>
         </div>
         <div class="col-12">
             <div class="form-group">
                 <input type="text"
                        class="form-control"
-                       id="fullName"
-                       placeholder="Full Name">
+                       placeholder="Full Name"
+                       id="full_name"
+                       name="full_name"
+                       th:value="(${session.user.full_name} != null ? ${session.user.full_name} : '')">
             </div>
             <div class="form-group">
                 <input type="text"
                        class="form-control"
+                       placeholder="UMCN"
                        id="embg"
-                       placeholder="UMCN">
+                       name="embg"
+                       th:value="(${session.user.embg} != null ? ${session.user.embg} : '')">
             </div>
             <div class="form-group">
                 <input type="text"
                        class="form-control"
+                       placeholder="Address"
                        id="address"
-                       placeholder="Address">
-            </div>
-            <div class="form-group">
-                <input type="text"
-                       class="form-control"
-                       id="passportNumber"
-                       placeholder="Passport Number">
+                       name="address"
+                       th:value="(${session.user.address} != null ? ${session.user.address} : '')">
             </div>
             <div class="form-group">
                 <input type="text"
                        class="form-control"
                        id="email"
-                       placeholder="Email">
+                       name="email"
+                       placeholder="Email"
+
+                       th:value="(${session.user.email} != null ? ${session.user.email} : '')">
             </div>
             <div class="form-group">
                 <input type="text"
                        class="form-control"
                        id="price"
-                       placeholder="Price">
+                       name="price"
+                       placeholder="Price"
+                       th:value="(${roomChosen.price} != null ? ${roomChosen.price} : '')">
+            </div>
+            <h6>Payment method</h6>
+            <div class="row ml-1">
+                <input type="radio" name="payment_method" th:value="'creditCard'">Credit Card</input>
+                <input type="radio" name="payment_method" th:value="'onSite'" class="ml-2">On Site</input>
+            </div>
+            <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       id="card_number"
+                       name="card_number"
+                       required
+                       placeholder="Card Number"
+                       th:value="(${card_number} != null ? ${card_number} : '')">
             </div>
         </div>
-    <button type="submit" class="btn btn-secondary ml-3" style="width: 570px">Submit</button>
+        <input type="hidden" name="room_id" th:value="${roomChosen.room_id}"/>
+        <button type="submit" class="btn btn-secondary ml-3" style="width: 570px">Next</button>
     </div>
 </form>
 </body>

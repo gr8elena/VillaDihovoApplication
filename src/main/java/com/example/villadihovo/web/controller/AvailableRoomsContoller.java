@@ -1,15 +1,20 @@
 package com.example.villadihovo.web.controller;
 
 import com.example.villadihovo.model.offers.Rooms;
+import com.example.villadihovo.model.users.UserTable;
+import com.example.villadihovo.service.ReservationService;
 import com.example.villadihovo.service.RoomsService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.hibernate.validator.internal.util.privilegedactions.LoadClass;
+import org.springframework.cglib.core.Local;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +24,7 @@ import java.util.Optional;
 public class AvailableRoomsContoller {
 
     private RoomsService roomsService;
+    private ReservationService reservationService;
 
     @GetMapping
     public ModelAndView listAllAvailableRooms(Model model){
@@ -29,12 +35,35 @@ public class AvailableRoomsContoller {
         return modelAndView;
     }
 
-    @GetMapping("/reserve/{id}")
-    public ModelAndView getReservePage(@PathVariable(required = false) Integer id, Model model){
+    @PostMapping("/reserve")
+    public ModelAndView getReservePage(@RequestParam LocalDate start_date,
+                                       @RequestParam LocalDate end_date,
+                                       @RequestParam Integer room_id,
+                                       Model model){
         ModelAndView modelAndView = new ModelAndView();
-        Optional<Rooms> chosenRoom = roomsService.findRoomById(id);
-        model.addAttribute("roomChosen", chosenRoom);
+        Optional<Rooms> chosenRoom = roomsService.findRoomById(room_id);
+        Rooms rooms = chosenRoom.get();
+        model.addAttribute("start_date", start_date);
+        model.addAttribute("end_date", end_date);
+        model.addAttribute("roomChosen", rooms);
         modelAndView.setViewName("reservation-form-rooms");
+        return modelAndView;
+    }
+    @PostMapping("/reserve/room")
+    public ModelAndView reserveRoomUsingPost(@RequestParam LocalDate start_date,
+                                             @RequestParam LocalDate end_date,
+                                             @RequestParam Integer number_guests,
+                                             @RequestParam Integer adults,
+                                             @RequestParam Integer children,
+                                             @RequestParam Integer room_id,
+                                             @RequestParam String payment_method,
+                                             @RequestParam String card_number,
+                                             @RequestParam Integer price,
+                                             HttpServletRequest request){
+        UserTable userTable = (UserTable) request.getSession().getAttribute("user");
+            reservationService.addReservation(start_date, end_date, number_guests, adults, children, payment_method, card_number, room_id, userTable, price);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("payment-confirmed");
         return modelAndView;
     }
 }
