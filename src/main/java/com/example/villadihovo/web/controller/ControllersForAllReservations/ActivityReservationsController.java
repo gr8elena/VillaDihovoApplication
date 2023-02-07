@@ -6,6 +6,7 @@ import com.example.villadihovo.service.reservation.ReservationForActivityService
 import com.example.villadihovo.service.statistics.StatisticsForActivityService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/reservations/activity")
 public class ActivityReservationsController {
     @Autowired
@@ -23,23 +24,19 @@ public class ActivityReservationsController {
     private StatisticsForActivityService statistics;
 
     @GetMapping
-    public ModelAndView listAllActivityReservations(Model model){
-        ModelAndView modelAndView = new ModelAndView();
+    public String listAllActivityReservations(Model model){
         List<ReservationForActivityDto> allActivityReservations = this.reservationForActivityService.findAllActivityReservations();
         model.addAttribute("activityReservations", allActivityReservations);
-        modelAndView.setViewName("activity-reservations");
-        return modelAndView;
+        return "activity-reservations";
     }
 
     @GetMapping("/statistics")
-    public ModelAndView listAllActivitiesAndStatistics(Model model){
-        ModelAndView modelAndView = new ModelAndView();
+    public String listAllActivitiesAndStatistics(Model model){
         List<ReservationForActivityDto> allActivityReservations = this.reservationForActivityService.findAllActivityReservations();
         List<StatisticsForActivity> statistics = this.statistics.listAll();
         model.addAttribute("activityReservations", allActivityReservations);
         model.addAttribute("statistics", statistics);
-        modelAndView.setViewName("activity-statistics");
-        return modelAndView;
+        return "activity-statistics";
     }
 
 

@@ -6,47 +6,43 @@ import com.example.villadihovo.service.reservation.ReservationService;
 import com.example.villadihovo.service.offers.RoomsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/rooms/available")
-public class AvailableRoomsContoller {
+public class AvailableRoomsController {
 
     private RoomsService roomsService;
     private ReservationService reservationService;
 
     @GetMapping
-    public ModelAndView listAllAvailableRooms(Model model){
-        ModelAndView modelAndView = new ModelAndView();
+    public String listAllAvailableRooms(Model model){
         List<Rooms> availableRooms = this.roomsService.getAvailableRooms();
         model.addAttribute("availableRooms",  availableRooms);
-        modelAndView.setViewName("available-rooms");
-        return modelAndView;
+        return "available-rooms";
     }
 
     @PostMapping("/reserve")
-    public ModelAndView getReservePage(@RequestParam LocalDate start_date,
+    public String getReservePage(@RequestParam LocalDate start_date,
                                        @RequestParam LocalDate end_date,
                                        @RequestParam Integer room_id,
                                        Model model){
-        ModelAndView modelAndView = new ModelAndView();
         Optional<Rooms> chosenRoom = roomsService.findRoomById(room_id);
         Rooms rooms = chosenRoom.get();
         model.addAttribute("start_date", start_date);
         model.addAttribute("end_date", end_date);
         model.addAttribute("roomChosen", rooms);
-        modelAndView.setViewName("reservation-form-rooms");
-        return modelAndView;
+        return "reservation-form-rooms";
     }
     @PostMapping("/reserve/room")
-    public ModelAndView reserveRoomUsingPost(@RequestParam LocalDate start_date,
+    public String reserveRoomUsingPost(@RequestParam LocalDate start_date,
                                              @RequestParam LocalDate end_date,
                                              @RequestParam Integer number_guests,
                                              @RequestParam Integer adults,
@@ -58,8 +54,6 @@ public class AvailableRoomsContoller {
                                              HttpServletRequest request){
         UserTable userTable = (UserTable) request.getSession().getAttribute("user");
             reservationService.addReservation(start_date, end_date, number_guests, adults, children, payment_method, card_number, room_id, userTable, price);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("payment-confirmed");
-        return modelAndView;
+        return "payment-confirmed";
     }
 }

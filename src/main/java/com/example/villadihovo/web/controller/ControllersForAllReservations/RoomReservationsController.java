@@ -8,6 +8,7 @@ import com.example.villadihovo.service.offers.RoomsService;
 import com.example.villadihovo.service.offers.VillaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.util.List;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/reservations/rooms")
 public class RoomReservationsController {
@@ -28,27 +29,23 @@ public class RoomReservationsController {
     RoomsService roomsService;
 
     @GetMapping
-    public ModelAndView listAllRoomReservations(Model model){
-        ModelAndView modelAndView = new ModelAndView();
+    public String listAllRoomReservations(Model model){
         List<ReservationForRoomDto> allRoomReservations = this.guestMakeReservationService.findAllRoomReservations();
        model.addAttribute("roomReservations", allRoomReservations);
-        modelAndView.setViewName("room-reservations");
-        return modelAndView;
+        return "room-reservations";
     }
     @GetMapping("/edit-form/{id}")
-    public ModelAndView getEditPage(@PathVariable(required = false) Integer id, Model model) {
+    public String getEditPage(@PathVariable(required = false) Integer id, Model model) {
         List<Villa> villaList = villaService.listAllVillas();
         ReservationForRoomDto roomDto = guestMakeReservationService.findRoomReservationByReservationId(id);
         List<Rooms> availableRooms = roomsService.findAll();
         model.addAttribute("villas", villaList);
         model.addAttribute("roomDto", roomDto);
         model.addAttribute("available_rooms", availableRooms);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("edit-form-rooms");
-        return modelAndView;
+        return "edit-form-rooms";
     }
     @PostMapping(value = "/update")
-    public ModelAndView updateReservation(@RequestParam("reservation_id") Integer reservation_id,
+    public String updateReservation(@RequestParam("reservation_id") Integer reservation_id,
                                           @RequestParam("start_date") LocalDate start_date,
                                           @RequestParam("end_date") LocalDate end_date,
                                           @RequestParam("adults") Integer adults,
@@ -57,17 +54,13 @@ public class RoomReservationsController {
                                           Model model){
         ReservationForRoomDto updatedRoom = guestMakeReservationService.updateRoomReservationById(reservation_id,start_date,end_date,adults,children,number_guests);
         model.addAttribute("roomDto", updatedRoom);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/reservations/rooms");
-        return modelAndView;
+        return "redirect:/reservations/rooms";
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ModelAndView deleteReservation(@PathVariable Integer id){
+    public String deleteReservation(@PathVariable Integer id){
         guestMakeReservationService.deleteReservationById(id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/reservations/rooms");
-        return modelAndView;
+        return "redirect:/reservations/rooms";
     }
 
 }

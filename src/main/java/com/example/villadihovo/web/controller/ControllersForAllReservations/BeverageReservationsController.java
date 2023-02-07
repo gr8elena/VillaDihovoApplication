@@ -4,6 +4,7 @@ import com.example.villadihovo.dto.ServiceForBeveragesDto;
 import com.example.villadihovo.service.reservation.ServiceForBeveragesService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/reservations/beverage")
 public class BeverageReservationsController {
@@ -21,12 +22,10 @@ public class BeverageReservationsController {
     private ServiceForBeveragesService serviceForBeveragesService;
 
     @GetMapping
-    public ModelAndView listAllBeverageReservations(Model model){
-        ModelAndView modelAndView = new ModelAndView();
+    public String listAllBeverageReservations(Model model){
         List<ServiceForBeveragesDto> allBeverageReservations = this.serviceForBeveragesService.findAllServiceForBeverages();
         model.addAttribute("beverageReservations", allBeverageReservations);
-        modelAndView.setViewName("beverage-reservations");
-        return modelAndView;
+        return "beverage-reservations";
     }
 
 }

@@ -9,13 +9,14 @@ import com.example.villadihovo.service.login.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalTime;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/api/login")
 public class LoginController {
@@ -26,14 +27,12 @@ public class LoginController {
     private LoginRepository loginRepository;
 
     @GetMapping
-    public ModelAndView getLoginPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
+    public String getLoginPage() {
+        return "login";
     }
 
     @PostMapping
-    public ModelAndView login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, Model model){
+    public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, Model model){
         UserTable user = null;
         String role;
         try{
@@ -49,12 +48,12 @@ public class LoginController {
                 request.getSession().setAttribute("role", role);
                 LogIn login = new LogIn(LocalTime.now().toString(), user);
                 this.loginRepository.save(login);
-                return new ModelAndView( "redirect:/home");
+                return "redirect:/home";
 
         }catch(InvalidUserCredentialsException | InvalidArgumentException exception){
             model.addAttribute("hasError", true);
             model.addAttribute("error", exception.getMessage());
-            return new ModelAndView( "login.html");
+            return "login.html";
         }
     }
 }
