@@ -19,9 +19,10 @@ public class AuthServiceImpl implements AuthService {
     public UserTable login(String username, String password) {
         if(username == null || username.isEmpty() || password == null || password.isEmpty())
         {
-            throw new InvalidArgumentException();
+            return userTableRepository.findByUsernameAndPassword(username, password).orElseThrow(InvalidArgumentException::new);
+        } else {
+            return userTableRepository.findByUsernameAndPassword(username, password).orElseThrow(InvalidUserCredentialsException::new);
         }
-        return userTableRepository.findByUsernameAndPassword(username, password).orElseThrow(InvalidUserCredentialsException::new);
     }
 
 

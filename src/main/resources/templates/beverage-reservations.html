@@ -69,11 +69,11 @@
                     <div class="dropdown">
                         <button class="dropbtn nav-link mr-5">Reservations</button>
                         <div class="dropdown-content">
-                            <li><a th:href="@{/rooms/reservations}" class="text-secondary">New Reservations</a></li>
+                            <li><a th:href="@{/reservations/rooms}" class="text-secondary">New Reservations</a></li>
                             <li><a th:href="@{/rooms/available}" class="text-secondary">Available Reservations</a></li>
                         </div>
                     </div>
-                    <a class="nav-link mr-5" href="#">Contact</a>
+                    <a class="nav-link mr-5" th:href="@{/home/contact}">Contact</a>
                     <a class="nav-link mr-5" href="/logout" th:if="${session.user != null}">Log Out</a>
                 </div>
             </div>

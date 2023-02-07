@@ -69,11 +69,11 @@
                     <div class="dropdown">
                         <button class="dropbtn nav-link mr-5">Reservations</button>
                         <div class="dropdown-content">
-                            <li><a th:href="@{/rooms/reservations}" class="text-secondary">New Reservations</a></li>
+                            <li><a th:href="@{/reservations/rooms}" class="text-secondary">New Reservations</a></li>
                             <li><a th:href="@{/rooms/available}" class="text-secondary">Available Reservations</a></li>
                         </div>
                     </div>
-                    <a class="nav-link mr-5" href="#">Contact</a>
+                    <a class="nav-link mr-5" th:href="@{/home/contact}">Contact</a>
                     <a class="nav-link mr-5" href="/logout" th:if="${session.user != null}">Log Out</a>
                 </div>
             </div>
@@ -94,16 +94,10 @@
     </div>
     <br> <br>
     <div class="container-fluid">
+        <button type="submit" class="btn btn-secondary mx-3 my-2 btn-block" th:onclick="'location.href = \'/reservations/activity/statistics\''">Statistics</button>
         <div th:each="reservation : ${activityReservations}" class="d-flex">
             <table class="table table-striped table-bordered table-hover">
                 <tr>
-<!--                    <td rowspan="2">-->
-<!--                        <div th:switch="${reservation.room_type}">-->
-<!--                            <img th:case="'Single'" th:src="@{../single_room.jpg}" width="350px" height="200px" alt="Single Room">-->
-<!--                            <img th:case="'Double'" th:src="@{../double_room.jpg}" width="350px" height="200px" alt="Double Room">-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash;                                <img th:src="@{../room.jpg}" width="350px" height="200px">&ndash;&gt;-->
-<!--                    </td>-->
                     <td>
                         <h6 class="text-secondary">Activity type</h6>
                         <th:block  th:text="${reservation.activity_type}"></th:block>

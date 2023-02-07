@@ -76,7 +76,7 @@
               <li><a th:href="@{/rooms/available}" class="text-secondary">Available Reservations</a></li>
             </div>
           </div>
-            <a class="nav-link mr-5" href="#">Contact</a>
+            <a class="nav-link mr-5" th:href="@{/home/contact}">Contact</a>
           <a class="nav-link mr-5" href="/logout" th:if="${session.user != null}">Log Out</a>
         </div>
       </div>

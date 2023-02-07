@@ -33,13 +33,17 @@ public class RegisterController {
                             @RequestParam String password,
                             @RequestParam String repeatPassword,
                             @RequestParam String full_name,
-                            @RequestParam String phone_number){
+                            @RequestParam String phone_number,
+                            Model model){
         try{
             this.authService.register(embg,address,email,username,password,repeatPassword,full_name,phone_number);
             return "redirect:/api/login";
         }
         catch(PasswordDoNotMatchException | InvalidArgumentException exception){
-            return "redirect:/api/redister?error=" + exception.getMessage();
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", exception.getMessage());
+//            return "redirect:/api/register?error=" + exception.getMessage();
+            return "registration";
         }
 
     }

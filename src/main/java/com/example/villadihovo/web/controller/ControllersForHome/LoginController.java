@@ -1,5 +1,6 @@
 package com.example.villadihovo.web.controller.ControllersForHome;
 
+import com.example.villadihovo.exceptions.InvalidArgumentException;
 import com.example.villadihovo.exceptions.InvalidUserCredentialsException;
 import com.example.villadihovo.model.attempts.LogIn;
 import com.example.villadihovo.model.users.UserTable;
@@ -50,10 +51,10 @@ public class LoginController {
                 this.loginRepository.save(login);
                 return new ModelAndView( "redirect:/home");
 
-        }catch(InvalidUserCredentialsException exception){
+        }catch(InvalidUserCredentialsException | InvalidArgumentException exception){
             model.addAttribute("hasError", true);
             model.addAttribute("error", exception.getMessage());
+            return new ModelAndView( "login.html");
         }
-        return new ModelAndView( "redirect:/api/login");
     }
 }

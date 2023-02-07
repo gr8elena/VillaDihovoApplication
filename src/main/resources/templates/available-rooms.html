@@ -16,10 +16,17 @@
     <style>
         header{
             font-size: 30px;
+            font-family:  'Montserrat', sans-serif;
         }
         body {
             font-family:  'Montserrat', sans-serif;
         }
+        h6{
+            text-align: center;
+            text-space: 5px;
+            font-size: 23px;
+        }
+
         h1{
             font-size:25px;
         }
@@ -73,7 +80,7 @@
                             <li><a th:href="@{/rooms/available}" class="text-secondary">Available Reservations</a></li>
                         </div>
                     </div>
-                    <a class="nav-link mr-5" href="#">Contact</a>
+                    <a class="nav-link mr-5" th:href="@{/home/contact}">Contact</a>
                     <a class="nav-link mr-5" href="/logout" th:if="${session.user != null}">Log Out</a>
                 </div>
             </div>
